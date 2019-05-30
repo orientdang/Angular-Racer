@@ -1,8 +1,8 @@
 <div class="container">
-	<h1>Driver detail </h1>
   <mat-grid-list *ngIf="driverStandings" cols="4" rowHeight="200px">
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <div class="racer-info">
+        <h1>Driver detail</h1>
         <p>
           <span class="article">
             Name:
@@ -37,7 +37,7 @@
           <span class="article">
             Biography:
           </span>
-          <a [href]="driverStandings.Driver.url">Link</a>
+          <a [href]="driverStandings.Driver.url" target="_blank">Link</a>
         </p>
       </div>
     </mat-grid-tile>
