@@ -10,16 +10,20 @@ import { RacerDetailComponent } from "./racer-detail/racer-detail.component";
 import { MatSortModule } from "@angular/material/sort";
 import { FormsModule } from "@angular/forms";
 import { PipesModule } from "../pipes/pipes.module";
+import { MatGridListModule } from "@angular/material/grid-list";
 @NgModule({
   declarations: [RacerListComponent, RacerDetailComponent],
   imports: [
     CommonModule,
     HttpClientModule,
     BrowserAnimationsModule,
+
     MatTableModule,
     MatInputModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatGridListModule,
+
     FormsModule,
     PipesModule
   ],

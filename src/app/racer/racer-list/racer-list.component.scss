@@ -1,13 +1,17 @@
 #racer-list {
   width: 100%;
-  .input{
+  .input {
     width: 30%;
     display: block;
-  };
+  }
   table {
     width: 100%;
-  }
-  th.mat-sort-header-sorted {
-    color: black;
+    th.mat-sort-header-sorted {
+      color: black;
+    }
+    tr[mat-row]:hover {
+      background-color: #c1d5f4;
+      cursor: pointer;
+    }
   }
 }

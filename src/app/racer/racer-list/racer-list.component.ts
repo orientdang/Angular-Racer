@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { RacerService } from "src/app/services/racer.service";
 import { MatSort, MatTableDataSource } from "@angular/material";
-import { FilterPipe } from "../../pipes/filter.pipe";
+import { Router } from "@angular/router";
 @Component({
   selector: "app-racer-list",
   templateUrl: "./racer-list.component.html",
@@ -9,50 +9,48 @@ import { FilterPipe } from "../../pipes/filter.pipe";
 })
 export class RacerListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
-  displayedColumns: string[] = [
+  public displayedColumns: string[] = [
     "position",
     "nationality",
     "name",
     "team",
     "point"
   ];
-  driverStandings: any;
-  dataSource: MatTableDataSource<any>;
-  inputSeason: number;
-  currentSeason = 2019;
-  filterText: string;
-  constructor(private racerListService: RacerService) {}
+  public driverStandings: any;
+  public dataSource: MatTableDataSource<any>;
+  public inputSeason: number;
+  public currentSeason = 2019;
+  public filterText: string;
+  public doneLoading = false;
+
+  constructor(private racerListService: RacerService, private router: Router) {}
+
   ngOnInit() {
     this.getRacerListFromService(this.currentSeason);
-    // console.log(this.driverStandings);
   }
 
   getRacerListFromService(season: number) {
-    let driverStandings: any;
     this.racerListService.getRacerList(season).subscribe(
       (res: any) => {
         if (res) {
-          driverStandings =
+          this.driverStandings =
             res.MRData.StandingsTable.StandingsLists[0].DriverStandings;
         }
       },
       (err: any) => {},
       () => {
-        this.driverStandings = driverStandings;
         this.dataSource = new MatTableDataSource(this.driverStandings);
         this.dataSource.sort = this.sort;
-        this.dataSource.sort.active = "nationality  ";
         console.log(this.dataSource);
-        console.log(this.sort);
+        this.doneLoading = true;
+        this.configFilter();
       }
     );
   }
 
   filterBySeason(event: any) {
-    // reset data
-    this.clearData();
     const inputSeason = event.target.value;
-    console.log(inputSeason);
+    this.doneLoading = false;
     this.getRacerListFromService(inputSeason);
   }
 
@@ -61,10 +59,35 @@ export class RacerListComponent implements OnInit {
     return standingsLists ? true : false;
   }
 
-  sortChange(e) {
-    console.log(e);
+  configFilter() {
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      const byID = data.Driver.driverId.indexOf(filter) !== -1;
+
+      const byGivenName =
+        data.Driver.givenName.toLowerCase().indexOf(filter) !== -1;
+
+      const byFamilyName =
+        data.Driver.familyName.toLowerCase().indexOf(filter) !== -1;
+
+      const byNation =
+        data.Driver.nationality.toLowerCase().indexOf(filter) !== -1;
+
+      const byPoint = data.points.indexOf(filter) !== -1;
+
+      const byTeam =
+        data.Constructors[0].name.toLowerCase().indexOf(filter) !== -1;
+
+      return (
+        byNation || byFamilyName || byGivenName || byPoint || byID || byTeam
+      );
+    };
   }
-  clearData() {
-    // this.dataSource.splice(0);
+
+  handleFilter(e: any) {
+    this.dataSource.filter = e.target.value.trim().toLowerCase();
+  }
+
+  navigateToDetail(driverID: any) {
+    this.router.navigate(["/detail", driverID]);
   }
 }

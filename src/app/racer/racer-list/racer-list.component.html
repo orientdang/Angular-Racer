@@ -12,15 +12,16 @@
       autocomplete="off"
       type="text"
       matInput
-      placeholder="Filter by Name"
+      placeholder="Filter driver"
+      (keyup)="handleFilter($event)"
       [(ngModel)]="filterText"
     />
   </mat-form-field>
   <table
     matSort
     mat-table
-    [dataSource]="dataSource | filter "
-    class="mat-elevation-z8"
+    [dataSource]="dataSource"
+    class="mat-elevation-z8"  
   >
     <!-- Position Column -->
     <ng-container matColumnDef="position">
@@ -61,7 +62,11 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let racer; columns: displayedColumns"
+      (click)="navigateToDetail(racer.Driver.driverId)"
+    ></tr>
   </table>
 </div>
 
