@@ -1,10 +1,11 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FilterPipe } from "./filter.pipe";
+import { FlagiconPipe } from "./flagicon.pipe";
 
 @NgModule({
-  declarations: [FilterPipe],
+  declarations: [FilterPipe, FlagiconPipe],
   imports: [CommonModule],
-  exports: [FilterPipe]
+  exports: [FilterPipe, FlagiconPipe]
 })
 export class PipesModule {}
