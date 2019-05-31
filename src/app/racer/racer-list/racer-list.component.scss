@@ -9,9 +9,17 @@
     th.mat-sort-header-sorted {
       color: black;
     }
-    tr[mat-row]:hover {
-      background-color: #c1d5f4;
-      cursor: pointer;
+    tr[mat-row] {
+      overflow: hidden;
+      transition: all 0.5s ease-out 0s;
+      &:hover {
+        margin-bottom: 2px;
+        // background-color: #c1d5f4;
+        border: solid 1px rgba(193, 213, 244, 0.84);
+        box-shadow: 11px 15px 50px -1px rgba(193, 213, 244, 0.84);
+        transform: translate(10px, -10px);
+        cursor: pointer;
+      }
     }
   }
 }
