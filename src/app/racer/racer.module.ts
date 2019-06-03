@@ -14,17 +14,15 @@ import { MatGridListModule } from "@angular/material/grid-list";
 @NgModule({
   declarations: [RacerListComponent, RacerDetailComponent],
   imports: [
-    CommonModule,
-    HttpClientModule,
     BrowserAnimationsModule,
-
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
     MatTableModule,
     MatInputModule,
     MatProgressSpinnerModule,
     MatSortModule,
     MatGridListModule,
-
-    FormsModule,
     PipesModule
   ],
   exports: [RacerListComponent, RacerDetailComponent]
